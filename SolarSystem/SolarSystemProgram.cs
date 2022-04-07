@@ -20,13 +20,15 @@ namespace SolarSystem
             // is the number of seconds that have elapsed since January 1, 1970
             var computerTime = Math.Round((DateTime.Now.Subtract(new System.DateTime(1970, 1, 1))).TotalDays / 365);
 
-            for (long year = 0; year < computerTime; year++)
+            for (var year = 0; year < computerTime; year++)
             {
                 // Earth completes it's orbit once a year
-                Planet.CompletedRotation();
+                Planet.CompletedRotation(earth);
+
+                var totalDays = IsLeapYear(year) ? 364 : 365;
 
                 // lunar eclipse 0-3 times per year
-                for (int day = 0; day < 365; day++)
+                for (int day = 0; day < totalDays; day++)
                 {
                     // Earth completing 1 rotation creates 1 day
                     Planet.CompletedRotation();
@@ -58,7 +60,6 @@ namespace SolarSystem
                 // One lightyear is 9.5 trillion km
                 // new LightYear(kilometers, second);
                 var ly = new LightYear(kilometers, second);
-
             }
         }
 
@@ -69,8 +70,15 @@ namespace SolarSystem
 
         public struct LightYear
         {
+            public int Kilometers { get; init; }
+            public int Second { get; init; }
+
             public int this[int a] => throw new Exception();
-            public LightYear(int kilometers, int second) => throw new Exception();
+            public LightYear(int kilometers, int second)
+            {
+                Kilometers = kilometers;
+                Second = second;
+            }
             public static LightYear operator +(LightYear a) => throw new Exception();
             public static LightYear operator -(LightYear a) => throw new Exception();
             public static LightYear operator +(LightYear x, LightYear y) => throw new Exception();

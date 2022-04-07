@@ -2,11 +2,18 @@
 
 public class DefaultPlanet : Planet
 {
+    private int _rotations = 0;
+
     public DefaultPlanet(double diameter, string? composition, double mass) : base(diameter, composition, mass)
     {
     }
 
     public DefaultPlanet() : this(default, default, default) { }
+
+    protected override void Rotate()
+    {
+        _rotations++;
+    }
 }
 
 public interface GasGiant

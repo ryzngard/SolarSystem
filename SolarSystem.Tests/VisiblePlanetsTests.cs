@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static SolarSystem.SolarSystemProgram;
 
 namespace SolarSystem.Tests
 {
@@ -100,5 +101,33 @@ namespace SolarSystem.Tests
 
         }
 
+        [TestMethod]
+        public void WriteExceptionInTest()
+        {
+            try
+            {
+                var lightYear = CreateLightYear();
+                Console.WriteLine(NestedCall(lightYear));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private bool NestedCall(LightYear lightYear)
+        {
+            return JustKeepNesting(lightYear);
+        }
+
+        private bool JustKeepNesting(LightYear lightYear)
+        {
+            return lightYear[0] > 0;
+        }
+
+        static LightYear CreateLightYear()
+        {
+            return new LightYear(100, 5);
+        }
     }
 }
